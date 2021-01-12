@@ -2,6 +2,8 @@ package com.myblog.blogproject.service;
 
 import com.myblog.blogproject.domain.user.User;
 import com.myblog.blogproject.domain.user.UserDao;
+import com.myblog.blogproject.domain.user.dto.LoginReqDto;
+import com.myblog.blogproject.domain.user.dto.LoginRespDto;
 
 public class UserService {
 	
@@ -17,5 +19,9 @@ public class UserService {
 	
 	public int 아이디중복체크(String username) {
 		return userDao.findByUsername(username);
+	}
+	
+	public LoginRespDto 로그인(LoginReqDto dto) {
+		return userDao.login(dto);
 	}
 }

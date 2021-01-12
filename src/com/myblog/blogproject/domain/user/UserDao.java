@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import com.myblog.blogproject.config.DB;
+import com.myblog.blogproject.domain.user.dto.LoginReqDto;
+import com.myblog.blogproject.domain.user.dto.LoginRespDto;
 
 public class UserDao {
 		
@@ -53,5 +55,31 @@ public class UserDao {
 		}
 		
 		return -1;
+	}
+	
+	public LoginRespDto login(LoginReqDto dto) {
+		String sql = "SELECT id, username, email, role FROM user WHERE username = ? AND password = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getUsername());
+			pstmt.setString(2, dto.getPassword());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				LoginRespDto respDto = LoginRespDto.builder()
+						.id(rs.getInt("id"))
+						.username(rs.getString("username"))
+						.email(rs.getString("email"))
+						.role(rs.getString("role"))
+						.build();
+				return respDto;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DB.close(conn, pstmt, rs);
+		}
+		return null;
 	}
 }
