@@ -99,6 +99,11 @@ public class UserController extends HttpServlet {
 				dis.forward(request, response);
 			}
 			
+		} else if (cmd.equals("logout")) {
+			HttpSession session = request.getSession();
+			session.invalidate();
+			dis = request.getRequestDispatcher("/index.jsp");
+			dis.forward(request, response);
 		}
 	}
 
