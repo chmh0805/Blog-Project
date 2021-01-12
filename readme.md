@@ -2,6 +2,7 @@
   1. jstl
   2. lombok
   3. mysql-connector-java
+  4. Gson
 <br/><br/>
 <hr/>
 
